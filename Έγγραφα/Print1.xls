@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"><html><head>	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />	<title>Softone Report</title><style>@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&subset=latin,greek');
+
+:root {
+    --main-border-color: #E8ECF2;
+    /* --main-border-color:#D6DBE3; */
+  }
+
+
+/* gereral table */ 
+body {
+    padding:20px;
+    font-family: 'open sans', sans-serif, Arial;
+    font-size: 13px;
+}
+
+.s1-report-container table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+
+}
+
+/* client info */ 
+.s1-report-container .mainheader td {
+    font-size: 20px;
+    font-weight:bold;
+}
+
+.s1-report-container .clientinfo td {
+    font-size: 15px;
+}
+
+.s1-report-container td {
+    padding: 0;
+}
+
+
+/* first level or .l0 */ 
+.clientinfo + .header,
+.clientinfo + .outterhheader + .header {
+    /* The first and main blue header might replaced with a class leadheader*/
+    border-top: 15px solid #fff;
+    background-color: #3F81C6;
+    color: #fff;
+    padding:8px;
+}
+
+.clientinfo + .outterhheader {
+    /* The first and main blue header might replaced with a class leadheader*/
+    border-top: 15px solid #fff;
+    background-color: #3F81C6;
+    color: #fff;
+    padding:8px;
+    text-align: center;
+}
+
+ 
+
+.clientinfo + .outterhheader + .header {
+    border-top: none;
+}
+
+.s1-report-container > table > tbody > tr.footersmall td,
+.s1-report-container > table > tbody > tr.line td, 
+.s1-report-container > table > tbody > tr.altline td {
+    padding:8px;
+}
+
+
+.s1-report-container > table > tbody > tr.hilighted td, .s1-report-container > table > tbody > .altline td {
+    padding:8px;
+}
+
+.s1-report-container .footer td {
+    font-weight: bold;
+    padding: 8px;
+ }
+
+ /* General padding in cells .l1 and lower */
+.s1-nested-container td, 
+.line td, 
+.altline td, 
+.header td {
+    padding: 5px;
+}
+
+ /* alignment in header cells.
+ This selectors could be replaced with simple .right and .left classes, and removing the old ones. */
+.header td:first-child, .s1-nested-container td[align=right]:first-child {
+    text-align: center;
+}
+
+.s1-nested-container .header td {
+    text-align: center;
+}
+
+/* Typography before .header at .l1 */
+.s1-nested-container .footersmall {
+    font-style: italic;
+}
+.s1-nested-container .outterhheader td{
+    font-size: 13px;
+    text-align: center;
+	font-weight:bold;
+}
+
+.s1-nested-container .outterhheader td:nth-child(2){
+    border-left:1px solid #E8ECF2;
+    border-right:1px solid #E8ECF2;
+}
+
+/* borders in "???OS?" "??S??S?" cells */
+.s1-nested-container td[align=right]:not(:first-child):not(:last-child)  {
+    border:1px solid #E8ECF2;
+}
+
+
+/* third level or .l2 */ 
+.s1-nested-container > table > tbody > tr > .s1-nested-container  {
+    /* alternative extra classes, td.s1-nested-container.l2 {} */
+    padding: 15px 5px;
+}
+
+.s1-nested-container > table > tbody > tr > .s1-nested-container table {
+    /* alternative .s1-nested-container.l2 table{ */
+    border:1px solid #D6DBE3;
+    border-left:6px solid #6FB3EF;
+    margin: 0 0 0 40px; 
+}
+
+/* background in .l2 and lower */
+.s1-report-container .s1-nested-container {
+    background-color: #f6f6f6;
+}
+
+
+/* width in .l2 and lower */
+.s1-report-container .s1-nested-container .s1-nested-container table {
+    width: auto;
+    /* min-width might should be different as the levels get more nested */
+    min-width: 50%;
+}
+
+/* borders in .l2 and lower */
+.s1-nested-container tr{
+    border-bottom:1px solid #E8ECF2;
+}
+
+/* hovers in .l2 and lower */
+.s1-nested-container tr:hover, .s1-report-container tr.line:hover, .s1-report-container tr.altline:hover, 
+.s1-nested-container > table > tbody > tr > .s1-nested-container tr.line:hover, 
+.s1-nested-container > table > tbody > tr > .s1-nested-container tr.altline:hover  {
+    background-color:#E8EAEE;
+}
+</style><script>
+
+var hlrow = null;     // hilighted row
+var hlrowClass = '';  // hilighted row className
+
+function ShowRecord(str)
+{
+	window.location.href='redir:'+str;
+}
+
+function markLine(tr, str)
+{
+	if (hlrow != null)
+	    hlrow.className = hlrowClass;
+	hlrow = tr;
+	hlrowClass = tr.className;
+	hlrow.className = 'hilighted';
+}
+
+function Setup()
+{	var rows = document.getElementsByTagName('tr'); 
+	var r;
+	for (i=0;i<rows.length;i++) 
+	{	r = rows[i];
+		if ((r.className=='altline'||r.className=='line') && (r.lineinfo!='') )
+		  r.ondblclick=function() { ShowRecord(this.getAttribute("lineinfo")); };
+        r.onclick=function() { if ((this.className=='line') || (this.className=='altline')) { markLine(this, this.lineinfo);};};
+	}
+} 
+
+window.onload=Setup;
+
+</script>
+</head><body><div class="s1-report-container"><table><tr class="mainheader"><td colspan="6">Λίστα</td></tr><tr class="clientinfo"><td colspan="6" align="left">GARDEN EXPERTS Α.Ε., Εδρα</td></tr><tr class="clientinfo"><td colspan="6" align="left">22o χλμ Λ. Λαυρίου, Κορωπί, 19400</td></tr><tr class="clientinfo"><td colspan="6" align="left">Α.Φ.Μ. :800603821 ΔΟΥ :ΦΑE ΑΘΗΝΩΝ</td></tr><tr class="clientinfo"><td colspan="6" align="left">Ημερομηνία εισαγωγής : 15/06/2023</td></tr><tr class="clientinfo"><td colspan="6" align="right"></td></tr><tr class="header"><td>A/A</td><td>Σειρά</td><td>Σύντμηση</td><td>Περιγραφή</td><td>Τύπος</td><td>Ενεργή</td></tr><tr class="line" lineinfo=""><td align="right">1</td><td align="right">7723</td><td align="left">ΧΠΑΛ</td><td align="left">Παραγγελία (Απ.Λιαν.Πωλ.)</td><td align="left">Παραγγελία (Απ.Λιαν.Πωλ.)</td><td align="left">0</td></tr><tr class="altline" lineinfo=""><td align="right">2</td><td align="right">7021</td><td align="left">ΠΑΡ</td><td align="left">Παραγγελία (Δα-Τιμ.)</td><td align="left">Παραγγελία (Δα-Τιμ.)</td><td align="left">1</td></tr><tr class="line" lineinfo=""><td align="right">3</td><td align="right">7721</td><td align="left">ΧΠΑΡ</td><td align="left">Παραγγελία (Δα-Τιμ.)</td><td align="left">Παραγγελία (Δα-Τιμ.)</td><td align="left">1</td></tr><tr class="altline" lineinfo=""><td align="right">4</td><td align="right">7023</td><td align="left">ΠΑΛ</td><td align="left">Παραγγελία (Απ.Λιαν.Πωλ.)</td><td align="left">Παραγγελία (Απ.Λιαν.Πωλ.)</td><td align="left">0</td></tr><tr class="line" lineinfo=""><td align="right">5</td><td align="right">7022</td><td align="left">ΠΑΡS360</td><td align="left">Παραγγελία s360</td><td align="left">Παραγγελία s360</td><td align="left">1</td></tr><tr class="altline" lineinfo=""><td align="right">6</td><td align="right">7722</td><td align="left">ΧΠΑΡΕΚ</td><td align="left">Παραγγελία προς εκτέλεση (Δα-Τιμ.)</td><td align="left">Παραγγελία (Δα-Τιμ.)</td><td align="left">1</td></tr></table></div></body>
