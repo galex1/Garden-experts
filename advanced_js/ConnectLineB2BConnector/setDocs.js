@@ -1,6 +1,6 @@
 //// ConnectLineB2BConnector.setDocs
 /// ----------------------------------------------------
-/// LAST UPDATE -> 2023-06-19 13:21 - galex
+/// LAST UPDATE -> 2023-08-21 15:48 - galex
 /// ----------------------------------------------------
 lib.include("ConnectLineEshopCommon.common");
 lib.include("ConnectLineB2BConnector.setMasterData");
@@ -276,7 +276,7 @@ function calculateOrder(obj) {
   ws.SERVICE = "Calculate";
   ws.OBJECT = "SALDOC";
   ws.LOCATEINFO = obj.locatinfo;
-  ws.FORM = "Προβολή για site";
+  // ws.FORM = "Προβολή για site";
   ws.DATA = {};
   ws.DATA.SALDOC = [];
   //ws.DATA.MTRDOC = [];
@@ -284,26 +284,50 @@ function calculateOrder(obj) {
   //ws.DATA.EXPANAL = [];
   try {
     var saldocObj = {};
-
+    obj = obj.data;
     saldocObj.SERIES = obj.saldoc[0].series;
 
-    if (obj.customerdata[0].afm == null || obj.customerdata[0].afm == "")
-      obj.customerdata[0].afm = "008841250";
-    //return responseError("Customer Afm is required!", false);
+    var costomerID = "";
 
-    customerData = getCustomers(obj.customerdata[0]);
+    if (obj.customerdata) {
+      if (obj.customerdata[0].afm != null && obj.customerdata[0].afm != "")
+        customerData = getCustomers(obj.customerdata[0]);
 
-    if (customerData.success == true) {
-      // The customer already exists
-      if (customerData.totalcount == 1) {
-        // ToDo: Decide if we have to update the customer or not.
-        saldocObj.TRDR = customerData.data[0].customer_id;
-      } else {
-        saldocObj.TRDR = 16339;
-        //return responseError("Customer is required!", false);
+
+      if (customerData.success == true) {
+        // The customer already exists
+        if (customerData.totalcount == 1) {
+          // ToDo: Decide if we have to update the customer or not.
+          costomerID = customerData.data[0].customer_id;
+        } else {
+          return responseError("Customer is required!", false);
+        }
       }
-    } else saldocObj.TRDR = 16339;
+    } else {
+      if (!obj.saldoc[0].trdr || obj.saldoc[0].trdr == null || obj.saldoc[0].TRDR == "") {
+        if (obj.saldoc[0].afm != null && obj.saldoc[0].afm != "") {
+          // arrCustomer = array("afm" => obj.afm);
+          var arrCustomer = {
+            afm: obj.saldoc[0].afm
+          };
+          customerData = getCustomers(arrCustomer);
 
+
+          if (customerData.success == true) {
+            // The customer already exists
+            if (customerData.totalcount == 1) {
+              // ToDo: Decide if we have to update the customer or not.
+              costomerID = customerData.data[0].customer_id;
+            } else {
+              return responseError("Customer is required! Not found with afm", false);
+            }
+          }
+        }
+      } else {
+        costomerID = obj.saldoc[0].trdr;
+      }
+    }
+    if (costomerID != "") saldocObj.TRDR = costomerID;
     //saldocObj.TRNDATE = obj.date;
 
     //if (obj.payment) saldocObj.PAYMENT = obj.payment;
@@ -326,18 +350,19 @@ function calculateOrder(obj) {
     //}
     //ws.DATA.MTRDOC.push(mtrdocObj);
 
-    for (i in obj.items) {
+    for (i in obj.itelines) {
       //*** Έλεγχος για ύπραξει είδους ***//
-      codeSearch = checkItemWithCustomSku(obj.items[i].srchcode);
-      if (codeSearch.success) srchcode = codeSearch.code;
-      else srchcode = obj.items[i].srchcode;
+      // codeSearch = checkItemWithCustomSku(obj.itelines[i].srchcode);
+      // if (codeSearch.success) srchcode = codeSearch.code;
+      // else srchcode = obj.itelines[i].srchcode;
+      var srchcode = obj.itelines[i].srchcode;
 
       var iteLinesObj = {};
       iteLinesObj.LINENUM = i;
       iteLinesObj.SRCHCODE = srchcode;
-      iteLinesObj.QTY1 = obj.items[i].qty;
-      iteLinesObj.PRICE = obj.items[i].price;
-      iteLinesObj.DISC1VAL = obj.items[i].discountvalue;
+      iteLinesObj.QTY1 = obj.itelines[i].qty1;
+      // iteLinesObj.PRICE = obj.itelines[i].price;
+      // iteLinesObj.DISC1VAL = obj.itelines[i].discountvalue;
       //iteLinesObj.LINEVAL = obj.items[i].value;
       ws.DATA.ITELINES.push(iteLinesObj);
     }
