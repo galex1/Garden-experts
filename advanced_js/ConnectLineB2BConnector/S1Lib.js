@@ -1,6 +1,6 @@
 //// ConnectLineB2BConnector.S1Lib
 /// ------------------------------------------------
-// LAST UPDATE -> 2023-05-24 14:34 - galex
+// LAST UPDATE -> 2023-06-16 14:38 - galex
 /// ------------------------------------------------
 //lib.include("CLLogging.Logger");
 lib.include("ConnectLineEshopCommon.common");
@@ -60,6 +60,8 @@ function ApiServices(obj) {
             responseObj = getOrdersStatus(requestObj);
         else if (requestObj.service == 'getOrderOnPdf')
             responseObj = getOrderOnPdf(requestObj);
+        else if (requestObj.service == 'getCustomerInfo')
+            responseObj = getCustomerInfo(requestObj);
         /*					setMasterData				*/
         else if (requestObj.service == 'setCustomer')
             responseObj = setCustomer(requestObj);

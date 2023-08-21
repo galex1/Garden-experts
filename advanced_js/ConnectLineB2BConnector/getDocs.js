@@ -1,6 +1,6 @@
 //// ConnectLineB2BConnector.getDocs
 /// ----------------------------------------------------
-/// LAST UPDATE -> 2023-03-31 16:32 - galex
+/// LAST UPDATE -> 2023-06-19 17:37 - galex
 /// ----------------------------------------------------
 lib.include("ConnectLineEshopCommon.common");
 
@@ -160,11 +160,17 @@ function getCustomerInfo(obj) {
   // Query Order
   dsSqlOrder = "order by c.CODE, c.TRDR";
 
-  dsSql = "select c.TRDR as CLIENT_ID, c.CODE, c.NAME, c.AFM, c.IRSDATA, c.ADDRESS, c.ZIP, c.DISTRICT, c.CITY, c.PHONE01, c.PHONE02, c.EMAIL  " +
-    "FROM TRDR c " + dsSqlWhere + dsSqlOrder;
+  // dsSql = "select c.TRDR as CLIENT_ID, c.CODE, c.NAME, c.AFM, c.IRSDATA, c.ADDRESS, c.ZIP, c.DISTRICT, c.CITY, c.PHONE01, c.PHONE02, c.EMAIL  " +
+  //   "FROM TRDR c " + dsSqlWhere + dsSqlOrder;
+  dsSql = "select distinct c.TRDR as CLIENT_ID, c.CODE, c.NAME, c.AFM, c.EMAIL, c.PAYMENT as PAYMENT_CODE, p.NAME as PAYMENT, c.SHIPMENT as SHIPMENT_CODE, s.NAME as SHIPMENT, c.ISACTIVE  " +
+    "FROM TRDR c " +
+    "INNER JOIN PAYMENT p on (c.PAYMENT = p.PAYMENT  AND p.SODTYPE = 13 AND p.COMPANY =:1) " +
+    "INNER JOIN SHIPMENT s on (c.SHIPMENT = s.SHIPMENT AND c.COMPANY =:1) ";
+
+  dsSql = dsSql + dsSqlWhere + dsSqlOrder;
 
   // return dsSql; 
-  dsData = X.GETSQLDATASET(dsSql, X.SYS.COMPANY);
+  dsData = X.GETSQLDATASET(dsSql, X.SYS.COMPANY, X.SYS.COMPANY, X.SYS.COMPANY);
 
   response.totalcount = dsData.RECORDCOUNT;
   response.data = JSON.parse(dsData.JSON);

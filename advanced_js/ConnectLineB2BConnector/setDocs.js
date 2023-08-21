@@ -1,6 +1,6 @@
 //// ConnectLineB2BConnector.setDocs
 /// ----------------------------------------------------
-/// LAST UPDATE -> 2023-06-15 15:51 - galex
+/// LAST UPDATE -> 2023-06-19 13:21 - galex
 /// ----------------------------------------------------
 lib.include("ConnectLineEshopCommon.common");
 lib.include("ConnectLineB2BConnector.setMasterData");
@@ -49,6 +49,7 @@ function setOrder(obj) {
     if (obj.remarks) tblFINDOC.REMARKS = obj.remarks;
     if (obj.comments) tblFINDOC.COMMENTS = obj.comments;
     if (obj.saler) tblFINDOC.SALESMAN = getSalesMan(obj.saler);
+    if (obj.finstates) tblFINDOC.FINSTATES = obj.finstates; else tblFINDOC.FINSTATES = "1000";
 
     if (obj.webid) tblFINDOC.FINCODE = obj.webid;
     // if (obj.billinfo.name) tblFINDOC.cccclvarchar02 = obj.billinfo.name;
