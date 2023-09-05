@@ -1,6 +1,6 @@
 //// ConnectLineB2BConnector.setDocs
 /// ----------------------------------------------------
-/// LAST UPDATE -> 2023-08-21 15:48 - galex
+/// LAST UPDATE -> 2023-09-05 13:12 - galex
 /// ----------------------------------------------------
 lib.include("ConnectLineEshopCommon.common");
 lib.include("ConnectLineB2BConnector.setMasterData");
@@ -38,8 +38,10 @@ function setOrder(obj) {
     tblFINDOC.EDIT;
 
     // tblFINDOC.SERIES = getSeries(obj);
-    if (!obj.series) tblFINDOC.SERIES = getSeries(obj);
-    else tblFINDOC.SERIES = obj.series;
+    // if (!obj.series) tblFINDOC.SERIES = getSeries(obj);
+    // else tblFINDOC.SERIES = obj.series;
+
+    tblFINDOC.SERIES = 7020;
     tblFINDOC.TRDR = customerProcessResult.id;
     tblFINDOC.TRNDATE = obj.date;
     //tblFINDOC.VARCHAR01 = obj.varchar01;
