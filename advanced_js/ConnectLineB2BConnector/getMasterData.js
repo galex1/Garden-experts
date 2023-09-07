@@ -1,6 +1,6 @@
 //// ConnectLineB2BConnector.getMasterData
 // ------------------------------------------------
-// LAST UPDATE -> 2023-06-15 15:51 - galex
+// LAST UPDATE -> 2023-09-07 17:14 - galex
 // ------------------------------------------------
 lib.include("ConnectLineEshopCommon.common");
 lib.include("ConnectLineB2BConnector.Params");
@@ -40,7 +40,7 @@ function getItems(obj) {
     dsSql = "SELECT A.MTRL AS ITEMID, A.CODE AS SKU, U.NAME AS UNIT, A.VAT AS VATID, V.NAME AS VAT, A.UPDDATE AS UPDDATE, " +
         " A.NAME AS NAME, A.CCCCLESHOPNAME as SHOPNAME, A.CCCCLESHOPDTDESC as DESCRIPTION, " +
         " ISNULL(A.CODE1,0) AS BARCODE, A.ISACTIVE, " +
-        " ISNULL(A.PRICEW, 0) AS PRICE, ISNULL(A.PRICER, 0) AS LIANIKI, ISNULL(A.SODISCOUNT, 0) AS EKPTOSILIANIKIS,  ISNULL(A.GWEIGHT, 0) AS WEIGHT, A.MTRMANFCTR AS BRANDID, " +
+        " ISNULL(A.PRICEW, 0) AS PRICE, ISNULL(A.PRICER, 0) AS LIANIKI, ISNULL(A.SODISCOUNT, 0) AS EKPTOSILIANIKIS,  ISNULL(A.GWEIGHT, 0) AS WEIGHT, A.MTRMARK AS BRANDID, " +
         " convert(varchar, getdate(), 20) AS SQLDATE " +
         " , M.NAME AS BRAND " +
         " , A.CCCCLESHOPSHOW AS VISIBILITY " +
@@ -61,7 +61,7 @@ function getItems(obj) {
 
         " FROM MTRL A    " +
         " INNER JOIN MTREXTRA C ON C.MTRL = A.MTRL AND C.SODTYPE = A.SODTYPE AND C.COMPANY = A.COMPANY " +
-        " LEFT JOIN MTRMANFCTR M ON M.MTRMANFCTR = A.MTRMANFCTR AND M.COMPANY = A.COMPANY " +
+        " LEFT JOIN MTRMARK M ON M.MTRMARK = A.MTRMARK AND M.COMPANY = A.COMPANY " +
         " LEFT JOIN VAT V ON V.VAT = A.VAT " +
         " LEFT JOIN MTRUNIT U ON U.MTRUNIT = A.MTRUNIT1 AND U.COMPANY = A.COMPANY " +
         dsSqlWhere;
