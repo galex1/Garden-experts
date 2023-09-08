@@ -1,6 +1,6 @@
 //// ConnectLineB2BConnector.getMasterData
 // ------------------------------------------------
-// LAST UPDATE -> 2023-09-07 17:14 - galex
+// LAST UPDATE -> 2023-09-08 09:32 - galex
 // ------------------------------------------------
 lib.include("ConnectLineEshopCommon.common");
 lib.include("ConnectLineB2BConnector.Params");
@@ -119,8 +119,8 @@ function getItems(obj) {
         " left join  CCCCLWEBCATEGORIES cat1 on cat1.CCCCLWEBCATEGORIES = c.CCCCLCATEG1 AND cat1.sodtype=1  and cat1.COMPANY =  " + X.SYS.COMPANY +
         " left join  CCCCLWEBCATEGORIES cat2 on cat2.CCCCLWEBCATEGORIES = c.CCCCLCATEG2 AND cat2.sodtype=2  and cat2.COMPANY = " + X.SYS.COMPANY +
         " left join  CCCCLWEBCATEGORIES cat3 on cat3.CCCCLWEBCATEGORIES = c.CCCCLCATEG3 AND cat3.sodtype=3  and cat3.COMPANY =" + X.SYS.COMPANY +
-        " left join  CCCCLWEBCATEGORIES cat4 on cat4.CCCCLWEBCATEGORIES = c.CCCCLCATEG2 AND cat4.sodtype=4  and cat4.COMPANY =" + X.SYS.COMPANY +
-        " left join  CCCCLWEBCATEGORIES cat5 on cat5.CCCCLWEBCATEGORIES = c.CCCCLCATEG2 AND cat5.sodtype=5  and cat5.COMPANY = " + X.SYS.COMPANY;
+        " left join  CCCCLWEBCATEGORIES cat4 on cat4.CCCCLWEBCATEGORIES = c.CCCCLCATEG4 AND cat4.sodtype=4  and cat4.COMPANY =" + X.SYS.COMPANY +
+        " left join  CCCCLWEBCATEGORIES cat5 on cat5.CCCCLWEBCATEGORIES = c.CCCCLCATEG5 AND cat5.sodtype=5  and cat5.COMPANY = " + X.SYS.COMPANY;
 
 
     dsCategoriesSql = dsCategoriesSql;
