@@ -1,6 +1,6 @@
 //// ConnectLineB2BConnector.getDocs
 /// ----------------------------------------------------
-/// LAST UPDATE -> 2023-06-19 17:37 - galex
+/// LAST UPDATE -> 2023-06-21 11:25 - galex
 /// ----------------------------------------------------
 lib.include("ConnectLineEshopCommon.common");
 
@@ -164,8 +164,8 @@ function getCustomerInfo(obj) {
   //   "FROM TRDR c " + dsSqlWhere + dsSqlOrder;
   dsSql = "select distinct c.TRDR as CLIENT_ID, c.CODE, c.NAME, c.AFM, c.EMAIL, c.PAYMENT as PAYMENT_CODE, p.NAME as PAYMENT, c.SHIPMENT as SHIPMENT_CODE, s.NAME as SHIPMENT, c.ISACTIVE  " +
     "FROM TRDR c " +
-    "INNER JOIN PAYMENT p on (c.PAYMENT = p.PAYMENT  AND p.SODTYPE = 13 AND p.COMPANY =:1) " +
-    "INNER JOIN SHIPMENT s on (c.SHIPMENT = s.SHIPMENT AND c.COMPANY =:1) ";
+    "LEFT JOIN PAYMENT p on (c.PAYMENT = p.PAYMENT  AND p.SODTYPE = 13 AND p.COMPANY =:1) " +
+    "LEFT JOIN SHIPMENT s on (c.SHIPMENT = s.SHIPMENT AND c.COMPANY =:1) ";
 
   dsSql = dsSql + dsSqlWhere + dsSqlOrder;
 
