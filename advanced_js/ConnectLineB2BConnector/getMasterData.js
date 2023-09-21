@@ -1,6 +1,6 @@
 //// ConnectLineB2BConnector.getMasterData
 // ------------------------------------------------
-// LAST UPDATE -> 2023-09-15 09:57 - galex
+// LAST UPDATE -> 2023-09-21 11:07 - galex
 // ------------------------------------------------
 lib.include("ConnectLineEshopCommon.common");
 lib.include("ConnectLineB2BConnector.Params");
@@ -566,35 +566,6 @@ function getBrands(obj) {
     response.data = JSON.parse(dsData.JSON);
     return response;
 }
-
-function getBrands(obj) {
-    // Initialize response array
-    var response = initializeResponse(true);
-
-    // Query Filters
-    dsSqlWhere = " where COMPANY = " + X.SYS.COMPANY + " AND SODTYPE = 51 ";
-    if (fieldHasValue(obj.code)) dsSqlWhere += "and code = '" + obj.code + "' ";
-    if (fieldHasValue(obj.name)) dsSqlWhere += "and name like '%" + obj.name + "%' ";
-    if (fieldHasValue(obj.isactive)) dsSqlWhere += "and isactive = '" + obj.isactive + "' ";
-    // Query Order
-    dsSqlOrder = " order by name ";
-    dsSql = " SELECT code, name, isactive FROM MTRMARK ";
-
-    dsSql = dsSql + dsSqlWhere + dsSqlOrder;
-    //return dsSql;
-    dsData = X.GETSQLDATASET(dsSql, X.SYS.COMPANY);
-    response.totalcount = dsData.RECORDCOUNT;
-
-    // dsData.FIRST;
-    // rows = [];
-
-    response.totalcount = dsData.RECORDCOUNT;
-    response.data = JSON.parse(dsData.JSON);
-    return response;
-}
-
-
-
 
 function getClientDocs(obj) {
     // Initialize response array
