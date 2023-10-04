@@ -1,6 +1,6 @@
 //// ConnectLineB2BConnector.getMasterData
 // ------------------------------------------------
-// LAST UPDATE -> 2023-09-21 11:07 - galex
+// LAST UPDATE -> 2023-10-04 12:11 - galex
 // ------------------------------------------------
 lib.include("ConnectLineEshopCommon.common");
 lib.include("ConnectLineB2BConnector.Params");
@@ -40,7 +40,7 @@ function getItems(obj) {
     dsSql = "SELECT A.MTRL AS ITEMID, A.CODE AS SKU, U.NAME AS UNIT, A.VAT AS VATID, V.NAME AS VAT, A.UPDDATE AS UPDDATE, " +
         " A.NAME AS NAME, A.CCCCLESHOPNAME as SHOPNAME, A.CCCCLESHOPDTDESC as DESCRIPTION, " +
         " ISNULL(A.CODE1,0) AS BARCODE, A.ISACTIVE, " +
-        " ISNULL(A.PRICEW, 0) AS PRICE, ISNULL(A.PRICER12, 0) AS LIANIKI, ISNULL(A.SODISCOUNT, 0) AS EKPTOSILIANIKIS,  ISNULL(A.GWEIGHT, 0) AS MINQANTITY, A.MTRMARK AS BRANDID, " +
+        " ISNULL(A.PRICEW, 0) AS PRICE, ISNULL(A.PRICER12, 0) AS LIANIKI, ISNULL(A.SODISCOUNT, 0) AS EKPTOSILIANIKIS,  ISNULL(A.GWEIGHT, 1) AS MINQANTITY, A.MTRMARK AS BRANDID, " +
         " convert(varchar, getdate(), 20) AS SQLDATE " +
         " , M.NAME AS BRAND " +
         " , A.CCCCLESHOPSHOW AS VISIBILITY " +
@@ -76,8 +76,8 @@ function getItems(obj) {
     dsData.FIRST;
     while (!dsData.EOF()) {
 
-
-
+        var minQ = dsData.MINQANTITY;
+        if (dsData.MINQANTITY == 0) minQ = 1;
 
 
 
@@ -96,7 +96,7 @@ function getItems(obj) {
             "VAT": dsData.VAT,
             "UNIT": dsData.UNIT,
             "STOCK": dsData.STOCK,
-            "MINQANTITY": dsData.MINQANTITY,
+            "MINQANTITY": minQ,
             "BRANDID": dsData.BRANDID,
             "BRAND": dsData.BRAND,
             // "SQLDATE": dsData.SQLDATE,
