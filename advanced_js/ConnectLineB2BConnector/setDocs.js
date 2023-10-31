@@ -111,6 +111,8 @@ function setOrder(obj) {
     // }
     // //----------------------------------------------------------
 
+    if (obj.kathestos) tblFINDOC.VATSTS = obj.kathestos;
+
     newid = objFINDOC.DBPOST;
     var response = initializeResponse(false);
     response.id = newid;

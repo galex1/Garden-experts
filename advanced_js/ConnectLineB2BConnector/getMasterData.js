@@ -1,6 +1,6 @@
 //// ConnectLineB2BConnector.getMasterData
 // ------------------------------------------------
-// LAST UPDATE -> 2023-10-04 12:11 - galex
+// LAST UPDATE -> 2023-10-16 14:12 - galex
 // ------------------------------------------------
 lib.include("ConnectLineEshopCommon.common");
 lib.include("ConnectLineB2BConnector.Params");
@@ -40,6 +40,7 @@ function getItems(obj) {
     dsSql = "SELECT A.MTRL AS ITEMID, A.CODE AS SKU, U.NAME AS UNIT, A.VAT AS VATID, V.NAME AS VAT, A.UPDDATE AS UPDDATE, " +
         " A.NAME AS NAME, A.CCCCLESHOPNAME as SHOPNAME, A.CCCCLESHOPDTDESC as DESCRIPTION, " +
         " ISNULL(A.CODE1,0) AS BARCODE, A.ISACTIVE, " +
+        " ISNULL(A.EXPVAL1, 0) as EXPVAL, " +
         " ISNULL(A.PRICEW, 0) AS PRICE, ISNULL(A.PRICER12, 0) AS LIANIKI, ISNULL(A.SODISCOUNT, 0) AS EKPTOSILIANIKIS,  ISNULL(A.GWEIGHT, 1) AS MINQANTITY, A.MTRMARK AS BRANDID, " +
         " convert(varchar, getdate(), 20) AS SQLDATE " +
         " , M.NAME AS BRAND " +
@@ -101,6 +102,7 @@ function getItems(obj) {
             "BRAND": dsData.BRAND,
             // "SQLDATE": dsData.SQLDATE,
             "SQLDATE": dsData.UPDDATE,
+            "EXPVAL": dsData.EXPVAL,
             "VISIBILITY": dsData.VISIBILITY,
             "CATEGORIES": [],
             // "VARIATIONS": [],
